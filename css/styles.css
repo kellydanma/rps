@@ -8,24 +8,39 @@ h2 {
   font-size: 1em;
 }
 
+h3 {
+  font-family: "Staatliches", cursive;
+  font-size: 2em;
+}
+
+h4 {
+  font-family: "Ubuntu", sans-serif;
+  font-size: 1em;
+  line-height: 1%;
+}
+
 p {
   font-family: "Ubuntu", sans-serif;
   font-size: 0.5em;
 }
 
 img {
-  width: 8vw;
+  width: 6.5vw;
 }
 
 img:hover {
   transition-duration: 1500ms;
-  width: 10vw;
+  width: 6vw;
+}
+
+.rival img:hover {
+  width: 6.5vw;
 }
 
 .console {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
   width: 50vw;
   min-width: 300px;
   height: 70vh;
@@ -56,4 +71,19 @@ img:hover {
 .bulbasaur {
   grid-column: 3/4;
   grid-row: 2/3;
+}
+
+.trainer {
+  grid-column: 1/4;
+  grid-row: 3/4;
+}
+
+.rival {
+  grid-column: 1/3;
+  grid-row: 4/5;
+}
+
+.score {
+  grid-column: 3/4;
+  grid-row: 4/5;
 }
