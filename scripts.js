@@ -22,8 +22,6 @@ const RIVAL_TEXT = new Map([
   [3, "Your rival used Bulbasaur! 🌱"],
 ]);
 
-const RESULT_STRING = new Map();
-
 const removeElements = (nodes) => [...nodes].forEach((n) => n.remove());
 const randomPlay = () => Math.ceil(Math.random() * Math.floor(3)); // 1, 2, or 3
 
