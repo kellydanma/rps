@@ -14,9 +14,6 @@
   </head>
 
   <body>
-    <!-- Import my functions here -->
-    <script src="scripts.js"></script>
-
     <div class="console">
       <div class="rules">
         <h1>Welcome, Trainer!</h1>
@@ -28,29 +25,30 @@
       </div>
 
       <!-- Trainer's pokemon options -->
-      <div class="charmander">
-        <img class="pokemon" src="./images/charmander.png" />
-        <h2>Charmander, I choose you! 🔥</h2>
+      <div class="pokemon">
+        <button id="1">
+          <img src="./images/charmander.png" />
+        </button>
       </div>
-      <div class="squirtle">
-        <img class="pokemon" src="./images/squirtle.png" />
+      <div class="pokemon">
+        <button id="2">
+          <img src="./images/squirtle.png" />
+        </button>
       </div>
-      <div class="bulbasaur">
-        <img class="pokemon" src="./images/bulbasaur.png" />
+      <div class="pokemon">
+        <button id="3">
+          <img src="./images/bulbasaur.png" />
+        </button>
       </div>
 
       <!-- Rival's pokemon -->
-      <div class="rival">
-        <img src="./images/bulbasaur.png" />
-        <h2>Your rival used Bulbasaur! 🌱</h2>
-      </div>
+      <div class="rival"></div>
 
       <!-- Scorekeeping -->
-      <div class="score">
-        <h3>Round 1 🏁</h3>
-        <h4>You: 1</h4>
-        <h4>Your rival: 0</h4>
-      </div>
+      <div class="score"></div>
+
+      <!-- Import my functions here -->
+      <script src="scripts.js"></script>
     </div>
   </body>
 </html>

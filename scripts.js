@@ -1,14 +1,31 @@
-const prompt = require("prompt-sync")();
-
 const POKEMON = new Map([
-  [1, "Charmander"],
-  [2, "Squirtle"],
-  [3, "Bulbasaur"],
+  ["1", 1],
+  ["2", 2],
+  ["3", 3],
 ]);
 
-function randomPlay() {
-  return Math.ceil(Math.random() * Math.floor(3)); // 1, 2, or 3
-}
+const POKEMON_IMAGE = new Map([
+  [1, "./images/charmander.png"],
+  [2, "./images/squirtle.png"],
+  [3, "./images/bulbasaur.png"],
+]);
+
+const TRAINER_TEXT = new Map([
+  [1, "Charmander, I choose you! 🔥"],
+  [2, "Squirtle, I choose you! 💦"],
+  [3, "Bulbasaur, I choose you! 🌱"],
+]);
+
+const RIVAL_TEXT = new Map([
+  [1, "Your rival used Charmander! 🔥"],
+  [2, "Your rival used Squirtle! 💦"],
+  [3, "Your rival used Bulbasaur! 🌱"],
+]);
+
+const RESULT_STRING = new Map();
+
+const removeElements = (nodes) => [...nodes].forEach((n) => n.remove());
+const randomPlay = () => Math.ceil(Math.random() * Math.floor(3)); // 1, 2, or 3
 
 function play(user, computer) {
   if (user == computer) {
@@ -22,68 +39,72 @@ function play(user, computer) {
   }
 }
 
-function printUserPokemon(pokemon) {
-  switch (pokemon) {
-    case 1:
-      console.log("\x1b[31m%s\x1b[0m%s", "🔥 Charmander", ", I choose you!");
-      break;
-    case 2:
-      console.log("\x1b[34m%s\x1b[0m%s", "💦 Squirtle", ", I choose you!");
-      break;
-    case 3:
-      console.log("\x1b[32m%s\x1b[0m%s", "🌱 Bulbasaur", ", I choose you!");
-  }
+function displayTrainer(button) {
+  removeElements(button.childNodes);
+  trainerPokemon = POKEMON.get(button.id);
+  const trainerImage = document.createElement("img");
+  trainerImage.src = POKEMON_IMAGE.get(trainerPokemon);
+  button.appendChild(trainerImage);
+  const trainerText = document.createElement("h2");
+  trainerText.textContent = TRAINER_TEXT.get(trainerPokemon);
+  button.appendChild(trainerText);
 }
 
-function printRivalPokemon(pokemon) {
-  switch (pokemon) {
-    case 1:
-      console.log("%s\x1b[31m%s\x1b[0m", "Your rival used ", "Charmander 🔥");
-      break;
-    case 2:
-      console.log("%s\x1b[34m%s\x1b[0m", "Your rival used ", "Squirtle 💦");
-      break;
-    case 3:
-      console.log("%s\x1b[32m%s\x1b[0m", "Your rival used ", "Bulbasaur 🌱");
-  }
+function displayRival(pokemon) {
+  const rival = document.querySelector(".rival");
+  removeElements(rival.childNodes);
+  const rivalImage = document.createElement("img");
+  rivalImage.src = POKEMON_IMAGE.get(pokemon);
+  rival.appendChild(rivalImage);
+  const rivalText = document.createElement("h2");
+  rivalText.textContent = RIVAL_TEXT.get(pokemon);
+  rival.appendChild(rivalText);
 }
 
-function scoreString(user, computer) {
-  if (user == computer) {
-    return "Tie!";
-  } else if (user > computer) {
-    return "You win!";
-  } else {
-    return "You lose!";
-  }
+function displayScore(curr, userScore, compScore) {
+  const score = document.querySelector(".score");
+  removeElements(score.childNodes);
+  const round = document.createElement("h3");
+  round.textContent = `Round ${curr} 🏁`;
+  score.appendChild(round);
+  const trainerScore = document.createElement("h4");
+  trainerScore.textContent = `You: ${userScore}`;
+  score.appendChild(trainerScore);
+  const rivalScore = document.createElement("h4");
+  rivalScore.textContent = `Your rival: ${compScore}`;
+  score.appendChild(rivalScore);
 }
 
-function printBattle(user, computer, result) {
-  printUserPokemon(user);
-  printRivalPokemon(computer);
-  console.log(scoreString(result[0], result[1]));
+function resetGame() {
+  buttonPlayAgain.addEventListener("click", () => {
+    window.location.reload();
+  });
 }
 
 function battle() {
-  console.log("Welcome, trainer!");
   let userScore = 0,
     compScore = 0;
-  for (let i = 0; i < 5; i++) {
-    console.log(`\nRound ${i + 1} 🏁`);
-    let user = parseInt(
-      prompt(
-        "Choose your pokemon - 1: Charmander, 2: Squirtle, 3: Bulbasaur ... "
-      )
-    );
-    comp = randomPlay();
-    result = play(user, comp);
-    userScore += result[0];
-    compScore += result[1];
-    printBattle(user, comp, result);
-  }
-  console.log("\n... and the results are in!");
-  console.log(`Your score: ${userScore}`);
-  console.log(`Rival's score: ${compScore}`);
+  let trainerPokemon,
+    prevPokemon,
+    round = 0;
+  const buttons = document.querySelectorAll("button");
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      console.log(prevPokemon);
+      if (prevPokemon != null) {
+        document.getElementById(prevPokemon).lastChild.remove();
+      }
+      round++;
+      let rivalPokemon = randomPlay();
+      prevPokemon = POKEMON.get(button.id);
+      let results = play(prevPokemon, rivalPokemon);
+      userScore += results[0];
+      compScore += results[1];
+      displayTrainer(button);
+      displayRival(rivalPokemon);
+      displayScore(round, userScore, compScore);
+    });
+  });
 }
 
 battle();
