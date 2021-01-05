@@ -76,9 +76,16 @@ function displayScore(curr, userScore, compScore) {
 }
 
 function resetGame() {
-  buttonPlayAgain.addEventListener("click", () => {
+  const score = document.querySelector(".score");
+  const playAgain = document.createElement("button");
+  playAgain.className = "play-again";
+  playAgain.textContent = "Let's go again!";
+  playAgain.style.fontFamily = "'Staatliches', cursive";
+  playAgain.style.fontSize = "1.5em";
+  playAgain.addEventListener("click", () => {
     window.location.reload();
   });
+  score.appendChild(playAgain);
 }
 
 function battle() {
@@ -86,23 +93,30 @@ function battle() {
     compScore = 0;
   let trainerPokemon,
     prevPokemon,
-    round = 0;
+    round = 0,
+    endGame = false;
+
   const buttons = document.querySelectorAll("button");
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
-      console.log(prevPokemon);
-      if (prevPokemon != null) {
-        document.getElementById(prevPokemon).lastChild.remove();
+      if (!endGame) {
+        if (prevPokemon != null) {
+          document.getElementById(prevPokemon).lastChild.remove();
+        }
+        round++;
+        endGame = round >= 7 ? true : false;
+        let rivalPokemon = randomPlay();
+        prevPokemon = POKEMON.get(button.id);
+        let results = play(prevPokemon, rivalPokemon);
+        userScore += results[0];
+        compScore += results[1];
+        displayTrainer(button);
+        displayRival(rivalPokemon);
+        displayScore(round, userScore, compScore);
+        if (endGame) {
+          resetGame();
+        }
       }
-      round++;
-      let rivalPokemon = randomPlay();
-      prevPokemon = POKEMON.get(button.id);
-      let results = play(prevPokemon, rivalPokemon);
-      userScore += results[0];
-      compScore += results[1];
-      displayTrainer(button);
-      displayRival(rivalPokemon);
-      displayScore(round, userScore, compScore);
     });
   });
 }

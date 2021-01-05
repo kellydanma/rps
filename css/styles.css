@@ -74,3 +74,8 @@ button {
   grid-column: 3/4;
   grid-row: 3/4;
 }
+
+p .playagain {
+  font-family: "Staatliches", cursive;
+  font-size: 2em;
+}
