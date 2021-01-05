@@ -1,12 +1,54 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>JS Basics</title>
+    <title>Pokemon Rock, Paper, Scissors</title>
     <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Staatliches&family=Ubuntu&display=swap"
+      rel="stylesheet"
+    />
+    />
+    <link href="./css/styles.css" rel="stylesheet" />
   </head>
 
   <body>
-    <!-- Import my functions here -->
-    <script src="rps.js"></script>
+    <div class="console">
+      <div class="rules">
+        <h1>Welcome, Trainer!</h1>
+        <h2>
+          🔥 Fire beats 🌱 grass, <br />💦 water beats 🔥 fire, <br />🌱 grass
+          beats 💦 water.
+        </h2>
+        <p>Who will you pick?</p>
+      </div>
+
+      <!-- Trainer's pokemon options -->
+      <div class="pokemon">
+        <button id="1">
+          <img src="./images/charmander.png" />
+        </button>
+      </div>
+      <div class="pokemon">
+        <button id="2">
+          <img src="./images/squirtle.png" />
+        </button>
+      </div>
+      <div class="pokemon">
+        <button id="3">
+          <img src="./images/bulbasaur.png" />
+        </button>
+      </div>
+
+      <!-- Rival's pokemon -->
+      <div class="rival"></div>
+
+      <!-- Scorekeeping -->
+      <div class="score"></div>
+
+      <!-- Import my functions here -->
+      <script src="scripts.js"></script>
+    </div>
   </body>
 </html>
